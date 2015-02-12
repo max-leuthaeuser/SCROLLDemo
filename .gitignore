@@ -1,0 +1,13 @@
+.DS_Store
+.idea/
+project/
+target/
+*.iml
+*.class
+classes_gen*
+source_gen*
+.cache
+.classpath
+.project
+.settings/
+/bin/
