@@ -1,5 +1,6 @@
 import annotations.Role
 import internal.Context
+import internal.util.Log.info
 
 /**
  * Demo application of smart cars driving around.
@@ -8,7 +9,6 @@ import internal.Context
  *
  * TODO:
  *
- * - add behavior
  * - add runtime example at instance level for transporting and charging where
  * behavior gets exchanged based on role-based dispatch.
  */
@@ -18,11 +18,21 @@ object SmartCarDemo extends App {
    * Defining all natural types.
    */
 
-  class Person()
+  class Person(name: String) {
+    def getName: String = name
+  }
 
-  class Car()
+  class Car(licenseID: String) {
+    def getLicenseID: String = licenseID
 
-  class Location()
+    def drive(): Unit = {
+      info("I am driving.")
+    }
+  }
+
+  class Location(name: String) {
+    def getName: String = name
+  }
 
   /**
    * Defining all contexts with it's roles.
@@ -30,21 +40,45 @@ object SmartCarDemo extends App {
 
   class Charging() extends Context {
 
-    @Role class ChargingStation()
+    @Role class ChargingStation() {
+      def doCharge(): Unit = {
+        info("Charging ...")
+      }
+    }
 
-    @Role class Charging()
+    @Role class ChargingCar() {
+      def drive(): Unit = {
+        info("I can't drive while charging!")
+      }
+    }
 
   }
 
   class Transportation() extends Context {
 
-    @Role class SmartCar()
+    @Role class SmartCar() {
+      def drive(): Unit = {
+        info("I am driving autonomously!")
+      }
+    }
 
-    @Role class NormalCar()
+    @Role class NormalCar() {
+      def drive(): Unit = {
+        info("I am driving with a driver!")
+      }
+    }
 
-    @Role class Passenger()
+    @Role class Passenger() {
+      def break(): Unit = {
+        info("I can't reach the break. I am just a passenger!")
+      }
+    }
 
-    @Role class Driver()
+    @Role class Driver() {
+      def break(): Unit = {
+        info("I do break!")
+      }
+    }
 
     @Role class TransportationRole()
 
