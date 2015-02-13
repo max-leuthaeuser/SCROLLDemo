@@ -1,0 +1,63 @@
+.source-code {
+    font-family: Andale Mono, Lucida Console, Monaco, fixed, monospace;
+    color: #000000;
+    background-color: #eee;
+    font-size: 12px;
+    padding: 5px;
+    overflow: scroll;
+    max-height: 300px;
+    white-space: nowrap;
+}
+
+.scrollable {
+    overflow: scroll;
+    max-height: 300px;
+}
+
+ul.menu {
+    display: block;
+    position: relative;
+    list-style: none;
+    font-weight: bold;
+    margin-left: 233px;
+    margin-top: -58px;
+}
+
+li > ul.subMenu {
+    display: none;
+    list-style: none;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-left: 77px;
+    margin-top: -48px;
+}
+
+ul.subMenu > li {
+    display: block;
+}
+
+li:hover ul.subMenu {
+    display: block;
+    position: absolute;
+}
+
+ul.noindent {
+    margin-left: -40px;
+}
+
+.table {
+    max-width: none;
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+col {
+    width:15%;
+}
+
+#scaled {
+   width:11%;
+   float:left;
+   margin-right:20px;
+   margin-bottom:20px;
+}
