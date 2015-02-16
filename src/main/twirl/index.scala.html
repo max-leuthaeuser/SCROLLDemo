@@ -67,11 +67,11 @@
         .append("svg")
         //responsive SVG needs these 2 attributes and no width and height attr
         .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0 0 " + w + " " + h)
+        .attr("viewBox", "-100 0 " + w + " " + h)
         //class to make it responsive
         .classed("svg-content-responsive", true);
 
-    d3.json("js/vendor/flare.json", function(json) {
+    d3.json("/rolegraph.json", function(json) {
       root = json;
       root.x0 = h / 2;
       root.y0 = 20;
@@ -84,12 +84,7 @@
       }
 
       // Initialize the display to show a few nodes.
-      root.children.forEach(toggleAll);
-      toggle(root.children[1]);
-      toggle(root.children[1].children[2]);
-      toggle(root.children[9]);
-      toggle(root.children[9].children[0]);
-
+      // root.children.forEach(toggleAll);
       update(root);
     });
 
@@ -100,7 +95,7 @@
       var nodes = tree.nodes(root).reverse();
 
       // Normalize for fixed-depth.
-      nodes.forEach(function(d) { d.y = d.depth * 130; });
+      nodes.forEach(function(d) { d.y = d.depth * 80; });
 
       // Update the nodes…
       var node = vis.selectAll("g.node")
@@ -185,6 +180,7 @@
 
     // Toggle children.
     function toggle(d) {
+
       if (d.children) {
         d._children = d.children;
         d.children = null;
@@ -192,7 +188,9 @@
         d.children = d._children;
         d._children = null;
       }
+
     }
+
 </script>
 
 }

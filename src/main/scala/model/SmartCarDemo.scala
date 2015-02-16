@@ -1,6 +1,10 @@
+package model
+
 import annotations.Role
-import internal.Context
+import internal.Compartment
 import internal.util.Log.info
+
+import scala.language.reflectiveCalls
 
 /**
  * Demo application of smart cars driving around.
@@ -9,10 +13,24 @@ import internal.util.Log.info
  *
  * TODO:
  *
- * - add runtime example at instance level for transporting and charging where
+ * - add more runtime examples at instance level for transporting and charging where
  * behavior gets exchanged based on role-based dispatch.
  */
-object SmartCarDemo extends App {
+class SmartCarDemo {
+
+  val transportation = new Transportation {
+
+    val peter = new Person("Peter")
+    val car = new Car("A-B-C-001")
+
+    peter play new Driver()
+    car play new NormalCar()
+
+    +car drive()
+    +peter break()
+
+    info("Demo ended.")
+  }
 
   /**
    * Defining all natural types.
@@ -38,7 +56,7 @@ object SmartCarDemo extends App {
    * Defining all contexts with it's roles.
    */
 
-  class Charging() extends Context {
+  class Charging() extends Compartment {
 
     @Role class ChargingStation() {
       def doCharge(): Unit = {
@@ -54,7 +72,7 @@ object SmartCarDemo extends App {
 
   }
 
-  class Transportation() extends Context {
+  class Transportation() extends Compartment {
 
     @Role class SmartCar() {
       def drive(): Unit = {
@@ -88,4 +106,8 @@ object SmartCarDemo extends App {
 
   }
 
+}
+
+object SmartCarDemo {
+  lazy val demo = new SmartCarDemo()
 }

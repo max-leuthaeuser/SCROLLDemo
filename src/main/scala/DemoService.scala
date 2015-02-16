@@ -1,5 +1,3 @@
-import java.io.File
-
 import akka.actor.{ActorContext, Actor}
 import spray.routing._
 import Routes._
@@ -34,6 +32,7 @@ trait DemoService extends HttpService
   val simpleCache = routeCache(maxCapacity = CACHE_MAX_CAPACITY, timeToLive = CACHE_DURATION)
 
   val myRoute = indexRoute ~
+    roleGraphRoute ~
     path(Rest) {
       // serving static files for bootstrap, cached and gzip compressed
       path =>
