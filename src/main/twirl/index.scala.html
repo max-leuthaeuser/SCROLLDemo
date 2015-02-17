@@ -54,8 +54,8 @@
 </style>
 
 <script type="text/javascript" charset="utf-8">
-    var w = $('#graph').width(),
-    h = 290,
+    var w = $('#graph').width() + 100,
+    h = 350,
     i = 0, root;
 
     var tree = d3.layout.tree().size([h, w]);
@@ -83,8 +83,6 @@
         }
       }
 
-      // Initialize the display to show a few nodes.
-      // root.children.forEach(toggleAll);
       update(root);
     });
 
@@ -95,7 +93,7 @@
       var nodes = tree.nodes(root).reverse();
 
       // Normalize for fixed-depth.
-      nodes.forEach(function(d) { d.y = d.depth * 80; });
+      nodes.forEach(function(d) { d.y = d.depth * 160; });
 
       // Update the nodes…
       var node = vis.selectAll("g.node")
