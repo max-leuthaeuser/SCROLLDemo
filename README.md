@@ -18,10 +18,11 @@ See the referenced [RoleDispatch][roledispatch] project for details.
 
 2.4. Or execute SBT and run ```eclipse``` if you are using the Eclipse Scala IDE. (to config see [here][gen-eclipse])
 
-**3. Example Demo **
+**3. Example - SmartCar:**
 
 The example ```SmartCar``` is based on the following model:
-[[models/SmartCar_with_compartments.jpg | width=300px]]
+
+![SmartCarModel](models/SmartCar_with_compartments.jpg)
 
 [sbt-gen-idea]: https://github.com/mpeltonen/sbt-idea
 [gen-eclipse]: https://github.com/typesafehub/sbteclipse
