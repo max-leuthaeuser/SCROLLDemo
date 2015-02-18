@@ -20,7 +20,7 @@ See the referenced [RoleDispatch][roledispatch] project for details.
 
 **3. Example - SmartCar:**
 
-The example ```SmartCar``` is based on the following model:
+The [example][smartcar] is based on the following model:
 
 ![SmartCarModel](models/SmartCar_with_compartments.jpg)
 
@@ -28,3 +28,4 @@ The example ```SmartCar``` is based on the following model:
 [gen-eclipse]: https://github.com/typesafehub/sbteclipse
 [scala-dynamic]: http://www.scala-lang.org/api/current/#scala.Dynamic
 [roledispatch]: https://github.com/max-leuthaeuser/RoleDispatch
+[smartcar]: https://github.com/max-leuthaeuser/VLDBDemo/blob/master/src/main/scala/model/SmartCarDemo.scala
