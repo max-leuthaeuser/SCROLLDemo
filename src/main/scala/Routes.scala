@@ -36,7 +36,7 @@ object Routes {
           val node = n.value.getClass.getSimpleName
           val hash = prettyName(n.value)
           JsObject(
-            "name" -> s"$node (#$hash)".toJson,
+            "name" -> s"$node  (#$hash)".toJson,
             "children" -> children(n)
           )
         }))
