@@ -9,7 +9,7 @@ object Boot extends App
   implicit val system = ActorSystem("on-spray-can")
 
   // create and start our service actor
-  val service = system.actorOf(Props[DemoServiceActor], "demo-service")
+  val service = system.actorOf(Props[RoutesActor], "demo-service")
 
   // get our logging object
   val log = system.log
