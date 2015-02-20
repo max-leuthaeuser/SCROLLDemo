@@ -28,8 +28,6 @@ class SmartCarDemo {
 
     +car drive()
     +peter break()
-
-    info("Demo ended.")
   }
 
   /**
