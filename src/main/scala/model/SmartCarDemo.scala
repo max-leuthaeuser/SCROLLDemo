@@ -28,7 +28,7 @@ class SmartCarDemo {
 
     peter play new AutonomousTransport.Passenger()
     googleCar play new AutonomousTransport.SmartCar()
-    
+
     harry play new ManualTransport.Driver()
     toyota play new ManualTransport.NormalCar()
 
@@ -36,12 +36,12 @@ class SmartCarDemo {
     +toyota drive()
     +peter break()
     +harry break()
-    
+
+    new Location("Munich") play new Source()
     new Location("Berlin") play new Source()
     new Location("Dresden") play new Target()
-    
-    this play new TransportationRole(E_?(new Source()), E_?(new Target()), googleCar) travel()
-    
+
+    this play new TransportationRole(one(new Source(), "getName" ==> "Munich"), one(new Target()), googleCar) travel()
   }
 
   /**
