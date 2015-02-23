@@ -5,6 +5,7 @@ import internal.Compartment
 import internal.util.Log.info
 
 import scala.language.reflectiveCalls
+import scala.language.postfixOps
 
 /**
  * Demo application of smart cars driving around.
@@ -13,21 +14,36 @@ import scala.language.reflectiveCalls
  *
  * TODO:
  *
- * - add more runtime examples at instance level for transporting and charging where
- * behavior gets exchanged based on role-based dispatch.
+ * - add associations (e.g. between car and driver etc.)
  */
 class SmartCarDemo {
 
   val transportation = new Transportation {
 
     val peter = new Person("Peter")
-    val car = new Car("A-B-C-001")
+    val googleCar = new Car("A-B-C-001")
 
-    peter play new Driver()
-    car play new NormalCar()
+    val harry = new Person("Harry")
+    val toyota = new Car("A-B-C-002")
 
-    +car drive()
+    peter play new AutonomousTransport.Passenger()
+    googleCar play new AutonomousTransport.SmartCar()
+    
+    harry play new ManualTransport.Driver()
+    toyota play new ManualTransport.NormalCar()
+
+    +googleCar drive()
+    +toyota drive()
     +peter break()
+    +harry break()
+    
+    val from = new Location("Berlin") 
+    from play new Source()
+    val to = new Location("Dresden")
+    to play new Target()
+    
+    this play new TransportationRole(from, to, googleCar) travel()
+    
   }
 
   /**
@@ -35,11 +51,11 @@ class SmartCarDemo {
    */
 
   class Person(name: String) {
-    def getName: String = name
+    def getName(): String = name
   }
 
   class Car(licenseID: String) {
-    def getLicenseID: String = licenseID
+    def getLicenseID(): String = licenseID
 
     def drive(): Unit = {
       info("I am driving.")
@@ -47,7 +63,7 @@ class SmartCarDemo {
   }
 
   class Location(name: String) {
-    def getName: String = name
+    def getName(): String = name
   }
 
   /**
@@ -72,31 +88,50 @@ class SmartCarDemo {
 
   class Transportation() extends Compartment {
 
-    @Role class SmartCar() {
-      def drive(): Unit = {
-        info("I am driving autonomously!")
+    object AutonomousTransport extends Compartment {
+
+      @Role class SmartCar() {
+        def drive(): Unit = {
+          info("I am driving autonomously!")
+        }
       }
+
+      @Role class Passenger() {
+        def break(): Unit = {
+          info("I can't reach the break. I am just a passenger!")
+        }
+      }
+
     }
 
-    @Role class NormalCar() {
-      def drive(): Unit = {
-        info("I am driving with a driver!")
+    object ManualTransport extends Compartment {
+
+      @Role class NormalCar() {
+        def drive(): Unit = {
+          info("I am driving with a driver!")
+        }
       }
+
+      @Role class Driver() {
+        def break(): Unit = {
+          info("I do break!")
+        }
+      }
+
     }
 
-    @Role class Passenger() {
-      def break(): Unit = {
-        info("I can't reach the break. I am just a passenger!")
+    @Role class TransportationRole(source: Location, target: Location, car: Car) {
+      def travel() {
+        assert((+source).isPlaying[Source], "Source Location must play the role Source!")
+        assert((+target).isPlaying[Target], "Target Location must play the role Target!")
+        
+        val from: String = -source getName()
+        val to: String = -target getName()
+        val license: String = car.getLicenseID()
+        info(s"Doing a transportation with the car $license from $from to $to.")
       }
-    }
 
-    @Role class Driver() {
-      def break(): Unit = {
-        info("I do break!")
-      }
     }
-
-    @Role class TransportationRole()
 
     @Role class Target()
 

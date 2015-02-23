@@ -8,13 +8,10 @@ class SmartCarDemoTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("SmartCarDemo") {
       When("Running the SmartCarDemo example")
       Then("There should be no error or exception.")
-      assert(null != new SmartCarDemo().transportation)
-    }
-
-    scenario("SmartCarDemo role graph") {
-      When("Running the SmartCarDemo example")
-      Then("The role graph should not be empty")
-      SmartCarDemo.demo.transportation.plays.store.isEmpty shouldBe false
+      val demo = SmartCarDemo.demo
+      assert(null != demo.transportation)
+      And("The role graph should not be empty.")
+      demo.transportation.plays.store.isEmpty shouldBe false
     }
   }
 }
