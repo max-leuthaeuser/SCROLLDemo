@@ -37,12 +37,10 @@ class SmartCarDemo {
     +peter break()
     +harry break()
     
-    val from = new Location("Berlin") 
-    from play new Source()
-    val to = new Location("Dresden")
-    to play new Target()
+    new Location("Berlin") play new Source()
+    new Location("Dresden") play new Target()
     
-    this play new TransportationRole(from, to, googleCar) travel()
+    this play new TransportationRole(E_?(new Source()), E_?(new Target()), googleCar) travel()
     
   }
 
@@ -120,11 +118,8 @@ class SmartCarDemo {
 
     }
 
-    @Role class TransportationRole(source: Location, target: Location, car: Car) {
+    @Role class TransportationRole(source: Source, target: Target, car: Car) {
       def travel() {
-        assert((+source).isPlaying[Source], "Source Location must play the role Source!")
-        assert((+target).isPlaying[Target], "Target Location must play the role Target!")
-        
         val from: String = -source getName()
         val to: String = -target getName()
         val license: String = car.getLicenseID()
