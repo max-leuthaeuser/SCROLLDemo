@@ -41,7 +41,7 @@ class SmartCarDemo {
     new Location("Berlin") play new Source()
     new Location("Dresden") play new Target()
 
-    this play new TransportationRole(one(new Source(), "getName" ==> "Munich"), one(new Target()), googleCar) travel()
+    this play new TransportationRole(one[Source]("getName" ==> "Berlin"), one[Target](), googleCar) travel()
   }
 
   /**
