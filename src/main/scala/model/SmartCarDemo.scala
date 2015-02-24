@@ -3,6 +3,7 @@ package model
 import annotations.Role
 import internal.Compartment
 import internal.util.Log.info
+import utils.TimeUtils
 
 import scala.language.reflectiveCalls
 import scala.language.postfixOps

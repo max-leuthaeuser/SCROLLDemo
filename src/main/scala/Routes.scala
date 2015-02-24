@@ -1,5 +1,5 @@
 import akka.actor.{ActorRefFactory, Actor}
-import services.{StaticContentService, RoleGraphService, IndexService}
+import services._
 
 class RoutesActor extends Actor with Routes {
   override val actorRefFactory: ActorRefFactory = context
@@ -10,6 +10,12 @@ class RoutesActor extends Actor with Routes {
 trait Routes extends IndexService
                 with RoleGraphService
                 with StaticContentService
+                with CarService
+                with PersonService
 {
-  val routes = indexRoute ~ roleGraphRoute ~ staticContent
+  val routes =  indexRoute ~
+                roleGraphRoute ~
+                addCarRoute ~
+                addPersonRoute ~
+                staticContent
 }

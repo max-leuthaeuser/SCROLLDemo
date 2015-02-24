@@ -1,21 +1,21 @@
 @()
 
 @main(title = "VLDB - SmartCar Demo") {
+<div class="row" style="max-width: 80%;margin-left: 9%;">
+    <div class="col-md-3">
+        <h3>Add player:</h3>
+        <a data-role="button" data-icon="arrow-r" data-iconpos="right" data-mini="true" href="/addCar">Add random car</a>
+        <a data-role="button" data-icon="arrow-r" data-iconpos="right" data-mini="true" href="/addPerson">Add random person</a>
+    </div>
+    <div class="col-md-9">
+        <h3>Runtime Role Graph:</h3>
+        <div id="graph" style="overflow:auto" alt="Runtime Role Graph"></div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <h3>Runtime Role Graph:</h3>
-            <div id="graph" style="overflow:auto" alt="Runtime Role Graph"></div>
-        </div>
-
-        <div class="col-md-4">
-            <h3>Database Role Graph:</h3>
-            ... (<i>TODO via RSQL</i>)
-        </div>
+        <h3>Database Role Graph:</h3>
+        ... (<i>TODO via RSQL</i>)
     </div>
 </div>
-
+    
 <style type="text/css">
 
     .node circle {
@@ -39,7 +39,7 @@
     display: inline-block;
     position: relative;
     width: 90%;
-    padding-bottom: 100%; /* aspect ratio */
+    padding-bottom: 45%;
     vertical-align: top;
     overflow: hidden;
     }
@@ -54,7 +54,7 @@
 </style>
 
 <script type="text/javascript" charset="utf-8">
-    var w = $('#graph').width() + 100,
+    var w = $('#graph').width(),
     h = 350,
     i = 0, root;
 
@@ -74,7 +74,7 @@
     d3.json("/rolegraph.json", function(json) {
       root = json;
       root.x0 = h / 2;
-      root.y0 = 20;
+      root.y0 = 150;
 
       function toggleAll(d) {
         if (d.children) {
@@ -93,7 +93,7 @@
       var nodes = tree.nodes(root).reverse();
 
       // Normalize for fixed-depth.
-      nodes.forEach(function(d) { d.y = d.depth * 160; });
+      nodes.forEach(function(d) { d.y = d.depth * 220 + 50});
 
       // Update the nodes…
       var node = vis.selectAll("g.node")
