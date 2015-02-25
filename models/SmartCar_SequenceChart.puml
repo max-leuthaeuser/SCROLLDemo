@@ -1,0 +1,76 @@
+@startuml
+skinparam monochrome true
+
+actor SmartCarDemo as demo
+demo -> "transportation:Transportation" as t : <<create>>
+activate t
+
+t -> "peter:Person" as peter : <<create>>
+activate peter
+t -> "googleCar:Car" as googleCar : <<create>>
+activate googleCar
+t -> "harry:Person" as harry : <<create>>
+activate harry
+t -> "toyota:Car" as toyota : <<create>>
+activate toyota
+
+t -> "Location('Munich')" as m : <<create>>
+activate m
+t -> "Location('Berlin')" as b : <<create>>
+activate b
+t -> "Location('Dresden')" as d : <<create>>
+activate d
+
+m -> "Source" as s1 : play
+activate s1
+b -> "Source" as s2 : play
+activate s2
+d -> "Target" as t1 : play
+activate t1
+
+harry -> "ManualTransport.Driver()" as d1 : play
+activate d1
+toyota -> "ManualTransport.NormalCar()" as n1 : play
+activate n1
+"ManualTransport" as mt1 -> t : partOf
+activate mt1
+
+mt1 -> "TransportationRole" as tr1 : play
+activate tr1
+t -> tr1 : travel()
+deactivate m
+deactivate d1
+deactivate n1
+deactivate tr1
+deactivate mt1
+
+peter -> "AutonomousTransport.Passenger()" as p1 : play
+activate p1
+googleCar -> "AutonomousTransport.SmartCar()" as sc1 : play
+activate sc1
+"AutonomousTransport" as at1 -> t : partOf
+activate at1
+at1 -> "TransportationRole" as tr2 : play
+activate tr2
+t -> tr2: travel()
+deactivate b
+deactivate p1
+deactivate sc1
+deactivate tr2
+deactivate d
+deactivate s1
+deactivate s2
+deactivate t1
+deactivate at1
+
+t -> googleCar : drive()
+t -> toyota : drive()
+t -> peter : break()
+t -> harry : break()
+
+deactivate googleCar
+deactivate toyota
+deactivate peter
+deactivate harry
+deactivate t
+@enduml
