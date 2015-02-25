@@ -20,9 +20,11 @@ See the referenced [SCROLL][roledispatch] project for details.
 
 **3. Example - SmartCar:**
 
-The [example][smartcar] is based on the following model:
+The [example][smartcar] is based on the following models:
 
 ![SmartCarModel](models/SmartCar_with_compartments.jpg)
+
+![SmartCarModelSequenceChar](models/SmartCar_SequenceChart.png)
 
 [sbt-gen-idea]: https://github.com/mpeltonen/sbt-idea
 [gen-eclipse]: https://github.com/typesafehub/sbteclipse
