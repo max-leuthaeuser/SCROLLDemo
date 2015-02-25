@@ -3,7 +3,6 @@ package model
 import annotations.Role
 import internal.Compartment
 import internal.util.Log.info
-import utils.TimeUtils
 
 import scala.language.reflectiveCalls
 import scala.language.postfixOps
@@ -21,28 +20,37 @@ class SmartCarDemo {
 
   val transportation = new Transportation {
 
+    // adding some persons with their cars
     val peter = new Person("Peter")
     val googleCar = new Car("A-B-C-001")
 
     val harry = new Person("Harry")
     val toyota = new Car("A-B-C-002")
 
-    peter play new AutonomousTransport.Passenger()
-    googleCar play new AutonomousTransport.SmartCar()
-
-    harry play new ManualTransport.Driver()
-    toyota play new ManualTransport.NormalCar()
-
-    +googleCar drive()
-    +toyota drive()
-    +peter break()
-    +harry break()
-
+    // adding some locations
     new Location("Munich") play new Source()
     new Location("Berlin") play new Source()
     new Location("Dresden") play new Target()
 
-    this play new TransportationRole(one[Source]("getName" ==> "Berlin"), one[Target](), googleCar) travel()
+    // and doing a manual transportation now
+    harry play new ManualTransport.Driver()
+    toyota play new ManualTransport.NormalCar()
+    ManualTransport partOf this
+
+    ManualTransport play new TransportationRole(one[Source]("getName" ==> "Berlin"), one[Target]()) travel()
+
+    // and here a autonomous one
+    peter play new AutonomousTransport.Passenger()
+    googleCar play new AutonomousTransport.SmartCar()
+    AutonomousTransport partOf this
+
+    AutonomousTransport play new TransportationRole(one[Source]("getName" ==> "Munich"), one[Target]()) travel()
+
+    // calling basic functionality
+    +googleCar drive()
+    +toyota drive()
+    +peter break()
+    +harry break()
   }
 
   /**
@@ -107,7 +115,8 @@ class SmartCarDemo {
 
       @Role class NormalCar() {
         def drive(): Unit = {
-          info("I am driving with a driver!")
+          val driver = one[Driver]()
+          info("I am driving with a driver called " + (-driver).getName() + ".")
         }
       }
 
@@ -119,12 +128,17 @@ class SmartCarDemo {
 
     }
 
-    @Role class TransportationRole(source: Source, target: Target, car: Car) {
+    @Role class TransportationRole(source: Source, target: Target) {
       def travel() {
         val from: String = -source getName()
         val to: String = -target getName()
-        val license: String = car.getLicenseID()
-        info(s"Doing a transportation with the car $license from $from to $to.")
+        val license: String = one[Car]().getLicenseID()
+        
+        val kindOfTransport = getCoreFor(this) match {
+          case ManualTransport => "manual"
+          case AutonomousTransport => "autonomous"
+        }
+        info(s"Doing a $kindOfTransport transportation with the car $license from $from to $to.")
       }
 
     }
