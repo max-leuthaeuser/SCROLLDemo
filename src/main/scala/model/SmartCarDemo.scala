@@ -116,7 +116,7 @@ class SmartCarDemo {
       @Role class NormalCar() {
         def drive(): Unit = {
           val driver = one[Driver]()
-          info("I am driving with a driver called " + (-driver).getName() + ".")
+          info("I am driving with a driver called " + (+driver).getName() + ".")
         }
       }
 
@@ -130,8 +130,8 @@ class SmartCarDemo {
 
     @Role class TransportationRole(source: Source, target: Target) {
       def travel() {
-        val from: String = -source getName()
-        val to: String = -target getName()
+        val from: String = +source getName()
+        val to: String = +target getName()
         val license: String = one[Car]().getLicenseID()
         
         val kindOfTransport = getCoreFor(this) match {
