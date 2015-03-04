@@ -13,7 +13,6 @@ import scala.language.postfixOps
  * Sometimes the car needs to be charged though.
  *
  * TODO:
- *
  * - add associations (e.g. between car and driver etc.)
  */
 class SmartCarDemo {
@@ -36,19 +35,18 @@ class SmartCarDemo {
     harry play new ManualTransport.Driver()
     toyota play new ManualTransport.NormalCar()
     ManualTransport partOf this
-
-    ManualTransport play new TransportationRole(one[Source]("getName" ==> "Berlin"), one[Target]()) travel()
+    
+    +toyota drive()
+    ManualTransport play new TransportationRole(one[Source]("name" ==# "Berlin"), one[Target]()) travel()
 
     // and here a autonomous one
     peter play new AutonomousTransport.Passenger()
     googleCar play new AutonomousTransport.SmartCar()
     AutonomousTransport partOf this
-
-    AutonomousTransport play new TransportationRole(one[Source]("getName" ==> "Munich"), one[Target]()) travel()
-
-    // calling basic functionality
+    
     +googleCar drive()
-    +toyota drive()
+    AutonomousTransport play new TransportationRole(one[Source]("name" ==# "Munich"), one[Target]()) travel()
+
     +peter break()
     +harry break()
   }
@@ -57,21 +55,11 @@ class SmartCarDemo {
    * Defining all natural types.
    */
 
-  class Person(name: String) {
-    def getName(): String = name
-  }
+  class Person(val name: String)
 
-  class Car(licenseID: String) {
-    def getLicenseID(): String = licenseID
+  class Car(val licenseID: String)
 
-    def drive(): Unit = {
-      info("I am driving.")
-    }
-  }
-
-  class Location(name: String) {
-    def getName(): String = name
-  }
+  class Location(val name: String)
 
   /**
    * Defining all contexts with it's roles.
@@ -80,13 +68,13 @@ class SmartCarDemo {
   class Charging() extends Compartment {
 
     @Role class ChargingStation() {
-      def doCharge(): Unit = {
+      def doCharge() {
         info("Charging ...")
       }
     }
 
     @Role class ChargingCar() {
-      def drive(): Unit = {
+      def drive() {
         info("I can't drive while charging!")
       }
     }
@@ -98,14 +86,15 @@ class SmartCarDemo {
     object AutonomousTransport extends Compartment {
 
       @Role class SmartCar() {
-        def drive(): Unit = {
+        def drive() {
           info("I am driving autonomously!")
         }
       }
 
       @Role class Passenger() {
-        def break(): Unit = {
-          info("I can't reach the break. I am just a passenger!")
+        def break() {
+          val name: String = (+this).name
+          info(s"I can't reach the break. I am $name and just a passenger!")
         }
       }
 
@@ -114,15 +103,16 @@ class SmartCarDemo {
     object ManualTransport extends Compartment {
 
       @Role class NormalCar() {
-        def drive(): Unit = {
+        def drive() {
           val driver = one[Driver]()
-          info("I am driving with a driver called " + (+driver).getName() + ".")
+          info("I am driving with a driver called " + (+driver).name + ".")
         }
       }
 
       @Role class Driver() {
-        def break(): Unit = {
-          info("I do break!")
+        def break() {
+          val name: String = (+this).name
+          info(s"I am $name and I am hitting the brakes now!")
         }
       }
 
@@ -130,10 +120,10 @@ class SmartCarDemo {
 
     @Role class TransportationRole(source: Source, target: Target) {
       def travel() {
-        val from: String = +source getName()
-        val to: String = +target getName()
-        val license: String = one[Car]().getLicenseID()
-        
+        val from: String = (+source).name
+        val to: String = (+target).name
+        val license: String = one[Car]().licenseID
+
         val kindOfTransport = getCoreFor(this) match {
           case ManualTransport => "manual"
           case AutonomousTransport => "autonomous"
