@@ -35,7 +35,7 @@ class SmartCarDemo {
     harry play new ManualTransport.Driver()
     toyota play new ManualTransport.NormalCar()
     ManualTransport partOf this
-    
+
     +toyota drive()
     ManualTransport play new TransportationRole(one[Source]("name" ==# "Berlin"), one[Target]()) travel()
 
@@ -43,7 +43,7 @@ class SmartCarDemo {
     peter play new AutonomousTransport.Passenger()
     googleCar play new AutonomousTransport.SmartCar()
     AutonomousTransport partOf this
-    
+
     +googleCar drive()
     AutonomousTransport play new TransportationRole(one[Source]("name" ==# "Munich"), one[Target]()) travel()
 
@@ -124,7 +124,7 @@ class SmartCarDemo {
         val to: String = (+target).name
         val license: String = one[Car]().licenseID
 
-        val kindOfTransport = getCoreFor(this) match {
+        val kindOfTransport = this player match {
           case ManualTransport => "manual"
           case AutonomousTransport => "autonomous"
         }
