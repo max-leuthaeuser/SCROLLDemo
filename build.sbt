@@ -5,7 +5,7 @@ name := "VLDBDemo"
 lazy val commonSettings = Seq(
   organization := "tu.dresden.de",
   version := "0.0.1",
-  scalaVersion := "2.11.4",
+  scalaVersion := "2.11.6",
   scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 )
 
