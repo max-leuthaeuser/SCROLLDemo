@@ -1,6 +1,6 @@
 import spray.revolver.RevolverPlugin._
 
-name := "VLDBDemo"
+name := "SCROLLDemo"
 
 lazy val commonSettings = Seq(
   organization := "tu.dresden.de",
@@ -25,7 +25,7 @@ lazy val main = (project in file(".")).dependsOn(scalaroles % "test->test;compil
     unmanagedResourceDirectories in Compile <++= baseDirectory { base =>
       Seq(base / "src/main/webapp")
     },
-    assemblyJarName in assembly := "VLDBDemo.jar"
+    assemblyJarName in assembly := "SCROLLDemo.jar"
   ).enablePlugins(SbtTwirl)
 
 Revolver.settings
