@@ -1,5 +1,5 @@
-VLDBDemo
-========
+SCROLL Demo
+===========
 
 Models and code for the VLDB demo application.
 
