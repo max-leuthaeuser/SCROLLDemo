@@ -1,7 +1,7 @@
 SCROLL Demo
 ===========
 
-Models and code for the VLDB demo application.
+Models and code for the [SCROLL][roledispatch] demo application.
 
 **1. Current state:** 
 
