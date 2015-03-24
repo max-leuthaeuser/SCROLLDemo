@@ -93,8 +93,7 @@ class SmartCarDemo {
 
       @Role class Passenger() {
         def break() {
-          val name: String = (+this).name
-          info(s"I can't reach the break. I am $name and just a passenger!")
+          info(s"I can't reach the break. I am ${+this name} and just a passenger!")
         }
       }
 
@@ -104,15 +103,13 @@ class SmartCarDemo {
 
       @Role class NormalCar() {
         def drive() {
-          val driver = one[Driver]()
-          info("I am driving with a driver called " + (+driver).name + ".")
+          info(s"I am driving with a driver called ${+one[Driver]() name}.")
         }
       }
 
       @Role class Driver() {
         def break() {
-          val name: String = (+this).name
-          info(s"I am $name and I am hitting the brakes now!")
+          info(s"I am ${+this name} and I am hitting the brakes now!")
         }
       }
 
@@ -120,15 +117,13 @@ class SmartCarDemo {
 
     @Role class TransportationRole(source: Source, target: Target) {
       def travel() {
-        val from: String = (+source).name
-        val to: String = (+target).name
-        val license: String = one[Car]().licenseID
-
         val kindOfTransport = this player match {
           case ManualTransport => "manual"
           case AutonomousTransport => "autonomous"
         }
-        info(s"Doing a $kindOfTransport transportation with the car $license from $from to $to.")
+        info(s"Doing a $kindOfTransport " +
+          s"transportation with the car ${one[Car]().licenseID} " +
+          s"from ${+source name} to ${+target name}.")
       }
 
     }
