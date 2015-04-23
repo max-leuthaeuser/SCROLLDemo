@@ -9,7 +9,7 @@ lazy val commonSettings = Seq(
   scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 )
 
-lazy val scalaroles = RootProject(file("../RoleDispatch"))
+lazy val scalaroles = RootProject(file("../SCROLL"))
 
 lazy val main = (project in file(".")).dependsOn(scalaroles % "test->test;compile->compile").settings(commonSettings: _*).
   settings(
