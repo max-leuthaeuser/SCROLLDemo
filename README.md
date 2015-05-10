@@ -57,8 +57,8 @@ class SmartCarDemo {
     +googleCar drive()
     AutonomousTransport play new TransportationRole(one[Source]("name" ==# "Munich"), one[Target]()) travel()
 
-    +peter break()
-    +harry break()
+    +peter brake()
+    +harry brake()
   }
 
   /**
@@ -77,13 +77,13 @@ class SmartCarDemo {
 
   class Charging() extends Compartment {
 
-    @Role class ChargingStation() {
+    class ChargingStation() {
       def doCharge() {
         info("Charging ...")
       }
     }
 
-    @Role class ChargingCar() {
+    class ChargingCar() {
       def drive() {
         info("I can't drive while charging!")
       }
@@ -94,37 +94,37 @@ class SmartCarDemo {
 
     object AutonomousTransport extends Compartment {
 
-      @Role class SmartCar() {
+      class SmartCar() {
         def drive() {
           info("I am driving autonomously!")
         }
       }
 
-      @Role class Passenger() {
-        def break() {
+      class Passenger() {
+        def brake() {
           val name: String = (+this).name
-          info(s"I can't reach the break. I am $name and just a passenger!")
+          info(s"I can't reach the brake. I am $name and just a passenger!")
         }
       }
     }
 
     object ManualTransport extends Compartment {
-      @Role class NormalCar() {
+      class NormalCar() {
         def drive() {
           val driver = one[Driver]()
           info("I am driving with a driver called " + (+driver).name + ".")
         }
       }
 
-      @Role class Driver() {
-        def break() {
+      class Driver() {
+        def brake() {
           val name: String = (+this).name
           info(s"I am $name and I am hitting the brakes now!")
         }
       }
     }
 
-    @Role class TransportationRole(source: Source, target: Target) {
+    class TransportationRole(source: Source, target: Target) {
       def travel() {
         val from: String = (+source).name
         val to: String = (+target).name
@@ -138,9 +138,9 @@ class SmartCarDemo {
       }
     }
 
-    @Role class Target()
+    class Target()
 
-    @Role class Source()
+    class Source()
   }
 }
 ```
@@ -152,7 +152,7 @@ I am driving with a driver called Harry.
 Doing a manual transportation with the car A-B-C-002 from Berlin to Dresden.
 I am driving autonomously!
 Doing a autonomous transportation with the car A-B-C-001 from Munich to Dresden.
-I can't reach the break. I am Peter and just a passenger!
+I can't reach the brake. I am Peter and just a passenger!
 I am Harry and I am hitting the brakes now!
 ```
 
