@@ -1,6 +1,5 @@
 package model
 
-import annotations.Role
 import internal.Compartment
 import internal.util.Log.info
 
@@ -47,8 +46,8 @@ class SmartCarDemo {
     +googleCar drive()
     AutonomousTransport play new TransportationRole(one[Source]("name" ==# "Munich"), one[Target]()) travel()
 
-    +peter break()
-    +harry break()
+    +peter brake()
+    +harry brake()
   }
 
   /**
@@ -67,13 +66,13 @@ class SmartCarDemo {
 
   class Charging() extends Compartment {
 
-    @Role class ChargingStation() {
+    class ChargingStation() {
       def doCharge() {
         info("Charging ...")
       }
     }
 
-    @Role class ChargingCar() {
+    class ChargingCar() {
       def drive() {
         info("I can't drive while charging!")
       }
@@ -85,15 +84,15 @@ class SmartCarDemo {
 
     object AutonomousTransport extends Compartment {
 
-      @Role class SmartCar() {
+      class SmartCar() {
         def drive() {
           info("I am driving autonomously!")
         }
       }
 
-      @Role class Passenger() {
-        def break() {
-          info(s"I can't reach the break. I am ${+this name} and just a passenger!")
+      class Passenger() {
+        def brake() {
+          info(s"I can't reach the brake. I am ${+this name} and just a passenger!")
         }
       }
 
@@ -101,21 +100,21 @@ class SmartCarDemo {
 
     object ManualTransport extends Compartment {
 
-      @Role class NormalCar() {
+      class NormalCar() {
         def drive() {
           info(s"I am driving with a driver called ${+one[Driver]() name}.")
         }
       }
 
-      @Role class Driver() {
-        def break() {
+      class Driver() {
+        def brake() {
           info(s"I am ${+this name} and I am hitting the brakes now!")
         }
       }
 
     }
 
-    @Role class TransportationRole(source: Source, target: Target) {
+    class TransportationRole(source: Source, target: Target) {
       def travel() {
         val kindOfTransport = this player match {
           case ManualTransport => "manual"
@@ -128,9 +127,9 @@ class SmartCarDemo {
 
     }
 
-    @Role class Target()
+    class Target()
 
-    @Role class Source()
+    class Source()
 
   }
 
