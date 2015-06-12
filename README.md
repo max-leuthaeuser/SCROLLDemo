@@ -10,13 +10,13 @@ See the referenced [SCROLL][roledispatch] project for details.
   
 **2. Edit and run:**
 
-2.1. Clone [SCROLL][roledispatch] into your workspace.
+2.1. Clone this repository into your workspace.
 
-2.2. Clone this repository into your workspace.
+2.2. Execute SBT and run ```gen-idea``` if you are using Intellij IDE <= 13 (to config see [here][sbt-gen-idea]). This is not required anymore since Intellij 14. Just use the built-in import SBT project functionality.
 
-2.3. Execute SBT and run ```gen-idea``` if you are using Intellij IDE <= 13 (to config see [here][sbt-gen-idea]). This is not required anymore since Intellij 14. Just use the built-in import SBT project functionality.
+2.3. Or execute SBT and run ```eclipse``` if you are using the Eclipse Scala IDE. (to config see [here][gen-eclipse])
 
-2.4. Or execute SBT and run ```eclipse``` if you are using the Eclipse Scala IDE. (to config see [here][gen-eclipse])
+2.4. Run it from the SBT console with ```run``` and visit ```127.0.0.1:8080``` in your browser.
 
 **3. Example - SmartCar:**
 

@@ -9,12 +9,11 @@ lazy val commonSettings = Seq(
   scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 )
 
-lazy val scalaroles = RootProject(file("../SCROLL"))
-
-lazy val main = (project in file(".")).dependsOn(scalaroles % "test->test;compile->compile").settings(commonSettings: _*).
+lazy val main = (project in file(".")).settings(commonSettings: _*).
   settings(
     resolvers += "spray repo" at "http://repo.spray.io",
     libraryDependencies ++= Seq(
+      "com.github.max-leuthaeuser" % "scroll_2.11" % "0.4",
       "org.scalatest" %% "scalatest" % "2.2.3" % "test",
       "io.spray" %% "spray-can" % "1.3.2",
       "io.spray" %% "spray-caching" % "1.3.2",
