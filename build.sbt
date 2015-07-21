@@ -5,7 +5,7 @@ name := "SCROLLDemo"
 lazy val commonSettings = Seq(
   organization := "tu.dresden.de",
   version := "0.0.1",
-  scalaVersion := "2.11.6",
+  scalaVersion := "2.11.7",
   scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 )
 
@@ -13,7 +13,7 @@ lazy val main = (project in file(".")).settings(commonSettings: _*).
   settings(
     resolvers += "spray repo" at "http://repo.spray.io",
     libraryDependencies ++= Seq(
-      "com.github.max-leuthaeuser" % "scroll_2.11" % "0.4",
+      "com.github.max-leuthaeuser" % "scroll_2.11" % "0.9.2",
       "org.scalatest" %% "scalatest" % "2.2.3" % "test",
       "io.spray" %% "spray-can" % "1.3.2",
       "io.spray" %% "spray-caching" % "1.3.2",

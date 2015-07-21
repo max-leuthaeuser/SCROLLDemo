@@ -1,7 +1,7 @@
 package model
 
-import internal.Compartment
-import internal.util.Log.info
+import scroll.internal.Compartment
+import scroll.internal.util.Log.info
 
 import scala.language.reflectiveCalls
 import scala.language.postfixOps

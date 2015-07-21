@@ -11,7 +11,7 @@ class SmartCarDemoTest extends FeatureSpec with GivenWhenThen with Matchers {
       val demo = SmartCarDemo.demo
       assert(null != demo.transportation)
       And("The role graph should not be empty.")
-      demo.transportation.plays.store.isEmpty shouldBe false
+      demo.transportation.plays.store.vertexSet().isEmpty shouldBe false
     }
   }
 }

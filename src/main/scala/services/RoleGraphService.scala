@@ -1,9 +1,8 @@
 package services
 
 import controller.SmartCarDemoController
-import internal.ReflectiveHelper
-import internal.graph.ScalaRoleGraph
-import internal.graph.ScalaRoleGraph.Relation
+import scroll.internal.ReflectiveHelper
+import scroll.internal.graph.ScalaRoleGraph
 import spray.http.MediaTypes._
 import spray.json._
 import spray.routing.HttpService
@@ -17,20 +16,26 @@ trait RoleGraphService extends HttpService {
       s.substring(s.indexOf("@") + 1, s.length)
     }
 
-    private def children(n: scalax.collection.mutable.Graph[Any, Relation]#NodeT): JsArray = JsArray(n.outgoing.toVector.map(n => {
-      val out = ReflectiveHelper.classSimpleClassName(n.target.value.getClass)
-      val outHash = getHashString(n.target.value)
-      JsObject("name" -> s"$out (#$outHash)".toJson, "children" -> children(n.target))
-    }))
+    private def children(c: ScalaRoleGraph, n: Any): JsArray = {
+      val l = c.getRoles(n)
+      JsArray(l.tail.toVector.map(cr => {
+        val out = ReflectiveHelper.classSimpleClassName(cr.getClass.toString)
+        val outHash = getHashString(cr)
+        JsObject("name" -> s"$out (#$outHash)".toJson, "children" -> children(c, cr))
+      }))
+    }
 
     implicit object ScalaRoleGraphJsonFormat extends RootJsonFormat[ScalaRoleGraph] {
       def write(c: ScalaRoleGraph) = {
-        val content = JsArray(c.store.nodes.toVector.filter(n => n.outDegree > 0).map(n => {
-          val node = ReflectiveHelper.classSimpleClassName(n.value.getClass)
-          val hash = getHashString(n.value)
+        val content = JsArray(c.allPlayers.toVector.filter(n => {
+          val l = c.getRoles(n)
+          l.nonEmpty && l.diff(Set(n)).nonEmpty
+        }).map(n => {
+          val node = ReflectiveHelper.classSimpleClassName(n.getClass.toString)
+          val hash = getHashString(n)
           JsObject(
             "name" -> s"$node  (#$hash)".toJson,
-            "children" -> children(n)
+            "children" -> children(c, n)
           )
         }))
 

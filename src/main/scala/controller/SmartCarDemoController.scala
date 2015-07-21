@@ -1,6 +1,6 @@
 package controller
 
-import internal.graph.ScalaRoleGraph
+import scroll.internal.graph.ScalaRoleGraph
 import model.SmartCarDemo
 import utils.TimeUtils
 
